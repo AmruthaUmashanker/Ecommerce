@@ -1,0 +1,25 @@
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    volumes:
+      - mongo-data:/data/db
+
+  backend:
+    image: amruthaumashanker/ecommerce-backend:${TAG:-latest}
+    restart: unless-stopped
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/eccomerce
+    depends_on:
+      - mongo
+
+  frontend:
+    image: amruthaumashanker/ecommerce-frontend:${TAG:-latest}
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  mongo-data:
