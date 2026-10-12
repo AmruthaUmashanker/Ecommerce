@@ -26,7 +26,7 @@ app.use("/cart", cartRouter.router)
 main().catch(err => console.log(err));
 
 async function main(){
-    await mongoose.connect('mongodb://127.0.0.1:27017/eccomerce');
+    await mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/eccomerce');
     console.log("connected")
 }
 
@@ -34,6 +34,6 @@ app.get("/", (req, res)=>{
     res.json({status: "success"})
 })
 
-app.listen(8080, ()=>{
+app.listen(process.env.PORT || 8080, ()=>{
     console.log("server started wow");
 })

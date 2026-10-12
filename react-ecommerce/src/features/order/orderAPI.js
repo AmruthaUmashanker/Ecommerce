@@ -1,7 +1,7 @@
 // A mock function to mimic making an async request for data
 export function createOrder(order) {
   return new Promise(async (resolve) =>{
-    const response = await fetch('http://localhost:8080/orders', {
+    const response = await fetch('/api/orders', {
       method: "POST",
       headers: {
         "content-type": "application/json"
@@ -17,7 +17,7 @@ export function createOrder(order) {
 
 export function updateOrder(order) {
   return new Promise(async (resolve) =>{
-    const response = await fetch('http://localhost:8080/orders/'+ order.id, {
+    const response = await fetch('/api/orders/'+ order.id, {
       method: "PATCH",
       headers: {
         "content-type": "application/json"
@@ -36,7 +36,7 @@ export function fetchAllOrders(pagination) {
   const queryString = "";
 
   return new Promise(async (resolve) =>{
-    const response = await fetch('http://localhost:8080/orders?'+ queryString);
+    const response = await fetch('/api/orders?'+ queryString);
 
     const data = await response.json();
     const totalOrders = await response.headers.get("X-Total-Count")

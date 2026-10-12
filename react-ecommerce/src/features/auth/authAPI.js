@@ -1,7 +1,7 @@
 // A mock function to mimic making an async request for data
 export function createUser(userData) {
   return new Promise(async (resolve) =>{
-    const response = await fetch('http://localhost:8080/auth/signup', {
+    const response = await fetch('/api/auth/signup', {
       method: "POST",
       headers: {
         "content-type": "application/json"
@@ -21,7 +21,7 @@ export function checkUser(loginInfo) {
     const email = loginInfo.email;
     const password = loginInfo.password;
 
-    const response = await fetch('http://localhost:8080/auth/login', {
+    const response = await fetch('/api/auth/login', {
       method: "POST",
       headers: {
         "content-type": "application/json"
