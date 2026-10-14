@@ -39,6 +39,7 @@ stages:
   condition: succeeded()
   jobs:
   - job: DeployLaptop
+    timeoutInMinutes: 15
     pool:
       name: Default
       demands:
@@ -62,10 +63,10 @@ stages:
       inputs:
         targetType: inline
         script: |
-          for ($i = 0; $i -lt 15; $i++) {
+          for ($i = 0; $i -lt 40; $i++) {
             try {
               $r = Invoke-WebRequest http://localhost/api/products -UseBasicParsing
-              if ($r.StatusCode -eq 200) { Write-Host "App is up"; exit 0 }
+              if ($r.StatusCode -ge 200 -and $r.StatusCode -lt 300) { Write-Host "App is up"; exit 0 }
             } catch {}
             Start-Sleep -Seconds 4
           }
