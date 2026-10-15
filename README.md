@@ -146,13 +146,6 @@ I kept these as small as possible. In a company they would be requests to the de
 | Health check never passed | It required HTTP 200, but the API returns 201 | Accept any status from 200 to 299 |
 | Browser showed the old page title after a green deploy | Browser cache | Checked the server's response directly, then did a hard refresh |
 
-## Screenshots
-
-![Pipeline run with both stages green](docs/screenshots/pipeline-run.png)
-![Docker Hub repositories and tags](docs/screenshots/docker-hub-tags.png)
-![Running containers with the deployed tag](docs/screenshots/docker-ps.png)
-![The shop running at localhost](docs/screenshots/shop.png)
-
 ## Known limitations
 
 - MongoDB runs without authentication (it is reachable only inside the Docker network).
