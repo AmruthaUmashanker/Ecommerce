@@ -81,7 +81,7 @@ export default function ProductForm() {
       setValue("price", +selectedProduct.price);
       // setValue('rating', selectedProduct.rating)
       setValue("discountPercentage", selectedProduct.discountPercentage);
-      setValue("image1", selectedProduct.images[0]);
+      setValue("image1", selectedProduct?.images?.[0]);
       setValue("image2", selectedProduct.images[1]);
       setValue("image3", selectedProduct.images[2]);
       setValue("thumbnail", selectedProduct.thumbnail);
