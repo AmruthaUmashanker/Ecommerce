@@ -214,7 +214,7 @@ const Checkout = () => {
           </p>
 
           <ul role="list" className="divide-y divide-gray-100">
-      {user.addresses.map((address, index) => (
+      {user?.addresses.map((address, index) => (
         <li key={address.index} className="flex justify-between gap-x-6 py-5 px-7">
           <div className="flex gap-x-4">
           <input  
@@ -292,7 +292,7 @@ const Checkout = () => {
           </h1>
           <div className="flow-root">
             <ul role="list" className="-my-6 divide-y divide-gray-200">
-              {items.map((item) => (
+              {items?.map((item) => (
                 <li key={item.id} className="flex py-6">
                   <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                     <img
