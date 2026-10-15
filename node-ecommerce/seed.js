@@ -30,8 +30,13 @@ async function load(path, items, label) {
   await load("/categories", data.categories, "categories");
   await load("/brands", data.brands, "brands");
 
+  // The original sample image links are dead, so use generated placeholder
+  // images that show the product name.
   const products = data.products
     .filter((p) => p.id <= 30 && !p.deleted)
-    .map(({ id, deleted, ...rest }) => rest);
+    .map(({ id, deleted, ...rest }) => {
+      const img = `https://dummyjson.com/image/400x400/282828/eae0d0/?text=${encodeURIComponent(rest.title)}`;
+      return { ...rest, thumbnail: img, images: [img, img, img, img] };
+    });
   await load("/products", products, "products");
 })();
