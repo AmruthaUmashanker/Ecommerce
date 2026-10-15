@@ -37,7 +37,7 @@ const Checkout = () => {
   }
 
   const handleAddress = (index)=>{
-    setSelectedAddress(user.addresses[index])
+    setSelectedAddress(user?.addresses?.[index])
   }
 
   const handlePayment = (payment)=>{
@@ -75,7 +75,7 @@ const Checkout = () => {
     <div className="grid grid-cols-1 lg:gap-x-8 gap-y-10 lg:grid-cols-5 mt-12 mb-12">
     <div className="lg:col-span-3 sm:col-span-1">
     <form action="" className="bg-white px-5 py-5" noValidate onSubmit={handleSubmit((data)=>{
-      const update = {...user, addresses: [...user.addresses, data]};
+      const update = {...user, addresses: [...(user?.addresses ?? []), data]};
       dispatch(
         updateUserAsync(update)
       )
@@ -120,12 +120,12 @@ const Checkout = () => {
             </div>
 
             <div className="sm:col-span-3">
-              <label htmlFor="country" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="phone" className="block text-sm font-medium leading-6 text-gray-900">
                 Phone
               </label>
               <div className="mt-2">
               <input
-                  id="email"
+                  id="phone"
                   {...register("phone", {required: "phone is required"})}
                   type="tel"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -214,8 +214,8 @@ const Checkout = () => {
           </p>
 
           <ul role="list" className="divide-y divide-gray-100">
-      {user?.addresses.map((address, index) => (
-        <li key={address.index} className="flex justify-between gap-x-6 py-5 px-7">
+      {user?.addresses?.map((address, index) => (
+        <li key={index} className="flex justify-between gap-x-6 py-5 px-7">
           <div className="flex gap-x-4">
           <input  
                     onChange={(e) =>handleAddress(index)}
@@ -296,7 +296,7 @@ const Checkout = () => {
                 <li key={item.id} className="flex py-6">
                   <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                     <img
-                      src={item.images[0]}
+                      src={item.images?.[0] || "/placeholder.png"}
                       alt={item.title}
                       className="h-full w-full object-cover object-center"
                     />

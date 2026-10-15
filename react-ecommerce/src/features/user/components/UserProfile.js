@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUserInfo, updateUserAsync } from "../userSlice";
 import { useForm } from "react-hook-form";
-import { computeHeadingLevel } from "@testing-library/react";
 
 const UserProfile = () => {
   const dispatch = useDispatch();
@@ -20,7 +19,7 @@ const UserProfile = () => {
   } = useForm();
 
   const handleEdit = (addressUpdate, index) => {
-    const newUser = { ...user, addresses: [...user.addresses] }; // for shallow capy issues
+    const newUser = { ...user, addresses: [...(user?.addresses ?? [])] }; // for shallow capy issues
     newUser.addresses.splice(index, 1, addressUpdate);
     dispatch(updateUserAsync(newUser));
     setSelectedEditIndex(-1);
@@ -28,7 +27,8 @@ const UserProfile = () => {
 
   const handleEditForm = (index) => {
     setSelectedEditIndex(index);
-    const address = user.addresses[index];
+    const address = user?.addresses?.[index];
+    if (!address) return;
     console.log(address);
 
     setValue("name", address.name);
@@ -41,7 +41,7 @@ const UserProfile = () => {
   };
 
   const handleRemove = (e, index) => {
-    const newUser = { ...user, addresses: [...user.addresses] }; // for shallow capy issues
+    const newUser = { ...user, addresses: [...(user?.addresses ?? [])] }; // for shallow capy issues
     newUser.addresses.splice(index, 1);
     dispatch(updateUserAsync(newUser));
   };
@@ -67,7 +67,10 @@ const UserProfile = () => {
           onSubmit={handleSubmit((data) => {
             console.log(data);
 
-            const update = { ...user, addresses: [...user.addresses, data] };
+            const update = {
+              ...user,
+              addresses: [...(user?.addresses ?? []), data],
+            };
             dispatch(updateUserAsync(update));
             reset();
             setshowAddAddressForm(false);
@@ -232,6 +235,7 @@ const UserProfile = () => {
 
             <div className="mt-6 flex items-center justify-end gap-x-6">
               <button
+                type="button"
                 onClick={(e) => setshowAddAddressForm(false)}
                 className="rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
               >
@@ -254,16 +258,16 @@ const UserProfile = () => {
             Name: {user?.name ? user.name : "New User"}
           </h1>
           <h3 className="text-2xl text-left font-bold tracking-tight text-gray-900 mb-10 mt-5 text-red-500">
-            Email Address : {user.email}
+            Email Address : {user?.email}
           </h3>
-          <p className="text-left"> For Debugging : role : {user.role}</p>
+          <p className="text-left"> For Debugging : role : {user?.role}</p>
         </div>
 
         <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
           <h1 className="text-left mt-6 font-bold"> Your Address : </h1>
 
-          {user.addresses.map((address, index) => (
-            <div>
+          {user?.addresses?.map((address, index) => (
+            <div key={index}>
               {selectedEditIndex === index && (
                 <form
                   action=""
@@ -434,7 +438,7 @@ const UserProfile = () => {
                     <div className="mt-6 flex items-center justify-end gap-x-6">
                       <button
                         onClick={(e) => setSelectedEditIndex(-1)}
-                        type="submit"
+                        type="button"
                         className="rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
                       >
                         Cancel
